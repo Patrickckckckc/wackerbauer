@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WACKERBAUER | Estilo que permanece</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="navbar container">
+        <a class="brand" href="index.html">WACKERBAUER</a>
+        <ul class="nav-links">
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="#mujer">Mujer</a></li>
+          <li><a href="#hombre">Hombre</a></li>
+          <li><a href="wishlist.html">Favoritos <span class="nav-count" data-wishlist-count>0</span></a></li>
+          <li><a href="cart.html">Carrito <span class="nav-count" data-cart-count>0</span></a></li>
+          <li><a class="nav-login" href="auth.html">Entrar</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero container">
+        <div class="hero-copy">
+          <p class="eyebrow">Nueva temporada / 2026</p>
+          <h1>Vestir bien es una forma de <em>avanzar.</em></h1>
+          <p class="hero-text">Prendas esenciales, siluetas precisas y detalles que hablan por ti. Descubre la nueva seleccion WACKERBAUER.</p>
+          <a class="button button-dark" href="#catalogo">Explorar coleccion <span>→</span></a>
+        </div>
+        <div class="hero-visual" role="img" aria-label="Modelo con conjunto de nueva temporada"></div>
+      </section>
+
+      <section class="marquee" aria-label="Filosofia WACKERBAUER">
+        <div>CALIDAD DIARIA <span>✦</span> DISEÑO CONSCIENTE <span>✦</span> HECHO PARA MOVERTE <span>✦</span></div>
+      </section>
+
+      <section id="catalogo" class="catalog container">
+        <div class="section-heading">
+          <div><p class="eyebrow">La seleccion</p><h2>Encuentra tu siguiente uniforme.</h2></div>
+          <p class="section-note">Piezas versatiles para todos los ritmos.</p>
+        </div>
+
+        <section id="mujer" class="category-section">
+          <div class="category-heading"><div><h3>Mujer</h3><div class="category-types"><span>Prendas</span><span>Calzado</span></div></div><a href="#mujer-prendas">Ver todo →</a></div>
+          <div id="mujer-prendas" class="product-grid">
+            <article class="product-card" data-product-id="blazer-01" data-product-name="Blazer estructura" data-product-price="129">
+              <div class="product-image image-blazer"><button class="icon-button wishlist-toggle" type="button" aria-label="Agregar Blazer estructura a favoritos">♡</button><span class="product-tag">Nuevo</span></div><div class="product-info"><div><h4>Blazer estructura</h4><p>Prendas · Negro</p></div><strong>129 €</strong></div><button class="text-button add-cart" type="button">Agregar al carrito</button>
+            </article>
+            <article class="product-card" data-product-id="camisa-01" data-product-name="Camisa linea" data-product-price="79">
+              <div class="product-image image-shirt"><button class="icon-button wishlist-toggle" type="button" aria-label="Agregar Camisa linea a favoritos">♡</button></div><div class="product-info"><div><h4>Camisa linea</h4><p>Prendas · Blanco roto</p></div><strong>79 €</strong></div><button class="text-button add-cart" type="button">Agregar al carrito</button>
+            </article>
+            <article class="product-card" data-product-id="loafer-01" data-product-name="Mocasín orbit" data-product-price="119">
+              <div class="product-image image-loafer"><button class="icon-button wishlist-toggle" type="button" aria-label="Agregar Mocasín orbit a favoritos">♡</button><span class="product-tag">Favorito</span></div><div class="product-info"><div><h4>Mocasin orbit</h4><p>Calzado · Chocolate</p></div><strong>119 €</strong></div><button class="text-button add-cart" type="button">Agregar al carrito</button>
+            </article>
+          </div>
+        </section>
+
+        <section id="hombre" class="category-section">
+          <div class="category-heading"><div><h3>Hombre</h3><div class="category-types"><span>Prendas</span><span>Calzado</span></div></div><a href="#hombre-prendas">Ver todo →</a></div>
+          <div id="hombre-prendas" class="product-grid">
+            <article class="product-card" data-product-id="overshirt-01" data-product-name="Overshirt campo" data-product-price="99">
+              <div class="product-image image-overshirt"><button class="icon-button wishlist-toggle" type="button" aria-label="Agregar Overshirt campo a favoritos">♡</button></div><div class="product-info"><div><h4>Overshirt campo</h4><p>Prendas · Verde oliva</p></div><strong>99 €</strong></div><button class="text-button add-cart" type="button">Agregar al carrito</button>
+            </article>
+            <article class="product-card" data-product-id="knit-01" data-product-name="Knit esencial" data-product-price="89">
+              <div class="product-image image-knit"><button class="icon-button wishlist-toggle" type="button" aria-label="Agregar Knit esencial a favoritos">♡</button><span class="product-tag">Nuevo</span></div><div class="product-info"><div><h4>Knit esencial</h4><p>Prendas · Grafito</p></div><strong>89 €</strong></div><button class="text-button add-cart" type="button">Agregar al carrito</button>
+            </article>
+            <article class="product-card" data-product-id="sneaker-01" data-product-name="Sneaker 02" data-product-price="109">
+              <div class="product-image image-sneaker"><button class="icon-button wishlist-toggle" type="button" aria-label="Agregar Sneaker 02 a favoritos">♡</button></div><div class="product-info"><div><h4>Sneaker 02</h4><p>Calzado · Marfil</p></div><strong>109 €</strong></div><button class="text-button add-cart" type="button">Agregar al carrito</button>
+            </article>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner container"><a class="brand" href="index.html">WACKERBAUER</a><p>© <span id="year"></span> WACKERBAUER. Hecho para durar.</p><a href="about.html">Nuestra historia →</a></div>
+    </footer>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>
