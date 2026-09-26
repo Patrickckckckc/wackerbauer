@@ -1,0 +1,8 @@
+[
+    { "id": "blazer-01", "name": "Blazer estructura", "price": 129, "category": "mujer-prendas", "color": "Negro" },
+    { "id": "camisa-01", "name": "Camisa linea", "price": 79, "category": "mujer-prendas", "color": "Blanco roto" },
+    { "id": "loafer-01", "name": "Mocasín orbit", "price": 119, "category": "mujer-calzado", "color": "Chocolate" },
+    { "id": "overshirt-01", "name": "Overshirt campo", "price": 99, "category": "hombre-prendas", "color": "Verde oliva" },
+    { "id": "knit-01", "name": "Knit esencial", "price": 89, "category": "hombre-prendas", "color": "Grafito" },
+    { "id": "sneaker-01", "name": "Sneaker 02", "price": 109, "category": "hombre-calzado", "color": "Marfil" }
+]
