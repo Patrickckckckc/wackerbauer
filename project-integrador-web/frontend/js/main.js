@@ -19,16 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const productData = (card) => ({ id: card.dataset.productId, name: card.dataset.productName, price: Number(card.dataset.productPrice), image: getComputedStyle(card.querySelector('.product-image')).backgroundImage });
   const refreshWishlistButtons = () => products.forEach((card) => { const button = card.querySelector('.wishlist-toggle'); if (button) { const saved = wishlist.some((item) => item.id === card.dataset.productId); button.classList.toggle('saved', saved); button.textContent = saved ? '♥' : '♡'; } });
 
-  // Reuse the catalog image styles for products with matching IDs.
-  const imageClasses = {
-    'blazer-01': 'image-blazer',
-    'camisa-01': 'image-shirt',
-    'loafer-01': 'image-loafer',
-    'overshirt-01': 'image-overshirt',
-    'knit-01': 'image-knit',
-    'sneaker-01': 'image-sneaker'
-  };
-
   const createProductCard = (product) => {
     const card = document.createElement('article');
     card.className = 'product-card';
@@ -37,7 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
     card.dataset.productPrice = product.price;
 
     const image = document.createElement('div');
-    image.className = `product-image ${imageClasses[product.id] || ''}`;
+    image.className = 'product-image';
+    image.style.backgroundImage = `url("${product.image}")`;
     const favoriteButton = document.createElement('button');
     favoriteButton.className = 'icon-button wishlist-toggle';
     favoriteButton.type = 'button';

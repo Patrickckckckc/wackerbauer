@@ -79,13 +79,7 @@ h3 { font-size: 1.8rem; margin-bottom: 0; font-weight: 400; }
 .category-heading a, .footer-inner a { color: inherit; font: .72rem Arial, sans-serif; letter-spacing: .1em; text-transform: uppercase; }
 .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
 .product-card { min-width: 0; }
-.product-image { aspect-ratio: .8; position: relative; background: var(--sage) center/cover; }
-.image-blazer { background-image: url('https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=700&q=80'); }
-.image-shirt { background-image: url('https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=700&q=80'); }
-.image-loafer { background-image: url('https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?auto=format&fit=crop&w=700&q=80'); }
-.image-overshirt { background-image: url('https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=700&q=80'); }
-.image-knit { background-image: url('https://images.unsplash.com/photo-1610652492500-ded49ceeb378?auto=format&fit=crop&w=700&q=80'); }
-.image-sneaker { background-image: url('https://images.unsplash.com/photo-1495555961986-6d4c1ecb7be3?auto=format&fit=crop&w=700&q=80'); }
+.product-image { aspect-ratio: .8; position: relative; background-color: var(--sage); background-position: center; background-size: cover; }
 .icon-button { border: 0; background: var(--white); color: var(--ink); width: 37px; height: 37px; border-radius: 50%; font-size: 1.3rem; cursor: pointer; position: absolute; right: .8rem; top: .8rem; }
 .icon-button.saved { background: var(--orange); color: var(--paper); }
 .product-tag { background: var(--orange); padding: .38rem .55rem; position: absolute; left: .8rem; top: .8rem; font: 700 .62rem Arial, sans-serif; text-transform: uppercase; letter-spacing: .1em; }
