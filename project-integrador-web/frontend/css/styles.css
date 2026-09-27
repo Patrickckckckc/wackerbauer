@@ -118,6 +118,20 @@ h3 { font-size: 1.8rem; margin-bottom: 0; font-weight: 400; }
 .order-summary > div { display: flex; justify-content: space-between; margin: 1.5rem 0; font: .8rem Arial, sans-serif; }
 .order-summary p:last-of-type { color: var(--muted); font: .75rem/1.5 Arial, sans-serif; }
 .order-summary .button { width: 100%; justify-content: space-between; }
+.button:disabled { cursor: not-allowed; opacity: .5; }
+.checkout-section { border-top: 1px solid var(--line); margin-top: 3rem; padding-top: 2rem; }
+.checkout-section h2 { font-size: 2rem; margin-bottom: 1.5rem; }
+.payment-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
+.payment-form label { display: grid; gap: .5rem; font: .72rem Arial, sans-serif; letter-spacing: .05em; text-transform: uppercase; }
+.payment-form input { width: 100%; min-height: 46px; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; background: transparent; padding: .7rem 0; color: var(--ink); font: 1rem Georgia, serif; }
+.payment-form input:focus { border-color: var(--orange); outline: 2px solid transparent; }
+.payment-form input[readonly] { color: var(--muted); }
+.payment-form .button { align-self: end; justify-content: space-between; }
+.security-note { color: var(--muted); font: .75rem/1.5 Arial, sans-serif; margin: 1.5rem 0 0; }
+.checkout-dialog { position: fixed; width: min(480px, calc(100% - 2rem)); margin: auto; border: 1px solid var(--line); padding: 3rem 2rem; background: var(--white); color: var(--ink); text-align: center; box-shadow: 0 1rem 3rem rgba(0, 0, 0, .2); }
+.checkout-dialog::backdrop { background: rgba(31, 33, 29, .65); }
+.checkout-dialog p { color: var(--orange); font: 700 1.6rem/1.2 Georgia, serif; margin: 0; }
+.checkout-dialog-close { position: absolute; top: .5rem; right: .5rem; width: 2.5rem; height: 2.5rem; border: 0; background: transparent; color: var(--ink); cursor: pointer; font: 1.5rem/1 Arial, sans-serif; }
 .auth-layout { display: grid; grid-template-columns: 1fr .8fr; gap: 8rem; padding-top: 8rem; min-height: 600px; }
 .auth-intro h1 { font-size: clamp(3.3rem, 6vw, 6rem); }
 .auth-intro > p:last-child { max-width: 360px; color: var(--muted); line-height: 1.6; }
@@ -145,5 +159,6 @@ h3 { font-size: 1.8rem; margin-bottom: 0; font-weight: 400; }
   .product-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem .7rem; }
   .product-grid .product-card:last-child { grid-column: span 2; max-width: calc(50% - .35rem); }
   .cart-layout, .auth-layout { grid-template-columns: 1fr; gap: 2rem; }
+  .payment-form { grid-template-columns: 1fr; }
   .auth-layout { padding-top: 4rem; }
 }

@@ -196,8 +196,64 @@ document.addEventListener('DOMContentLoaded', () => {
 
   renderSavedItems(wishlist, document.querySelector('#wishlist-items'), document.querySelector('#wishlist-empty'));
   renderSavedItems(cart, document.querySelector('#cart-items'), document.querySelector('#cart-empty'), true);
-  const total = document.querySelector('#cart-total'); if (total) total.textContent = `${cart.reduce((sum, item) => sum + item.price * item.quantity, 0)} €`;
-  document.querySelector('#checkout-button')?.addEventListener('click', () => { alert('Gracias. La pasarela de pago estara disponible muy pronto.'); });
+  const cartTotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const total = document.querySelector('#cart-total'); if (total) total.textContent = `${cartTotal} €`;
+  const checkoutButton = document.querySelector('#checkout-button');
+  const checkoutSection = document.querySelector('#checkout-section');
+  const paymentForm = document.querySelector('#payment-form');
+  const cardNumber = document.querySelector('#card-number');
+  const paymentAmount = document.querySelector('#payment-amount');
+  const checkoutDialog = document.querySelector('#checkout-success-dialog');
+
+  if (paymentAmount) paymentAmount.value = cartTotal.toFixed(2);
+  if (checkoutButton) {
+    checkoutButton.disabled = cartTotal <= 0;
+    checkoutButton.addEventListener('click', () => {
+      if (cartTotal <= 0) return;
+      checkoutSection.classList.remove('hidden');
+      checkoutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
+  const isValidCardNumber = (value) => {
+    const digits = value.replace(/[\s-]/g, '');
+    if (!/^\d{13,19}$/.test(digits)) return false;
+    let sum = 0;
+    let doubleDigit = false;
+    for (let index = digits.length - 1; index >= 0; index -= 1) {
+      let digit = Number(digits[index]);
+      if (doubleDigit) {
+        digit *= 2;
+        if (digit > 9) digit -= 9;
+      }
+      sum += digit;
+      doubleDigit = !doubleDigit;
+    }
+    return sum % 10 === 0;
+  };
+
+  cardNumber?.addEventListener('input', () => cardNumber.setCustomValidity(''));
+  paymentForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    cardNumber.setCustomValidity(isValidCardNumber(cardNumber.value) ? '' : 'Introduce un numero de tarjeta valido.');
+    if (Number(paymentAmount.value) !== cartTotal || cartTotal <= 0) {
+      paymentAmount.setCustomValidity('El importe debe coincidir con el total del carrito.');
+    } else {
+      paymentAmount.setCustomValidity('');
+    }
+    if (!paymentForm.reportValidity()) return;
+
+    paymentForm.reset();
+    cart.length = 0;
+    writeStore('wackerbauer-cart', cart);
+    updateCounts();
+    checkoutDialog?.showModal();
+  });
+  checkoutDialog?.addEventListener('cancel', (event) => event.preventDefault());
+  document.querySelector('#close-checkout-dialog')?.addEventListener('click', () => {
+    checkoutDialog.close();
+    window.location.href = 'index.html';
+  });
   refreshWishlistButtons(); updateCounts();
   loadProducts();
 
