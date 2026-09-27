@@ -1,0 +1,8 @@
+[
+    {
+    "username": "Patrick",
+    "email": "patrick@gmail.com",
+    "passwordSalt": "11552a503b04306953a5f8a0a020aac0",
+    "passwordHash": "78cead86f248b16c767479d121a6b8c89dee1c53cdd6d45878108b8a4a206031068004388fc7493e4fbc63c9eb37298e13cf14b27fcd2ff280dda089b4154d14"
+    }
+]

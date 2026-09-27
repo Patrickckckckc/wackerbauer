@@ -10,6 +10,53 @@ document.addEventListener('DOMContentLoaded', () => {
   let products = [];
   const cart = readStore('wackerbauer-cart');
   const wishlist = readStore('wackerbauer-wishlist');
+  const authTokenKey = 'wackerbauer-token';
+  let authToken = localStorage.getItem(authTokenKey);
+  let currentUser = null;
+  let sessionPromise = Promise.resolve();
+
+  const updateAuthUI = () => {
+    const loginLink = document.querySelector('.nav-login');
+    if (loginLink) {
+      loginLink.textContent = currentUser ? 'Cerrar sesion' : 'Entrar';
+      loginLink.href = currentUser ? '#' : 'auth.html';
+      loginLink.dataset.logout = currentUser ? 'true' : 'false';
+    }
+    const welcomeMessage = document.querySelector('#welcome-message');
+    if (welcomeMessage) {
+      welcomeMessage.textContent = currentUser ? `Hola, ${currentUser.username}` : '';
+      welcomeMessage.classList.toggle('hidden', !currentUser);
+    }
+  };
+
+  if (authToken) {
+    sessionPromise = fetch('/api/auth/session', { headers: { Authorization: `Bearer ${authToken}` } })
+      .then(async (response) => {
+        if (!response.ok) throw new Error('Sesion no valida');
+        const data = await response.json();
+        currentUser = data.user;
+      })
+      .catch(() => {
+        localStorage.removeItem(authTokenKey);
+        authToken = null;
+      })
+      .then(updateAuthUI);
+  } else {
+    updateAuthUI();
+  }
+
+  const openAuthForCurrentPage = () => {
+    const next = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+    sessionStorage.setItem('wackerbauer-auth-message', 'Inicia sesion o crea una cuenta para continuar.');
+    window.location.href = `auth.html?next=${encodeURIComponent(next)}`;
+  };
+
+  const requireUser = async () => {
+    await sessionPromise;
+    if (currentUser) return true;
+    openAuthForCurrentPage();
+    return false;
+  };
 
   const updateCounts = () => {
     document.querySelectorAll('[data-cart-count]').forEach((element) => { element.textContent = cart.reduce((total, item) => total + item.quantity, 0); });
@@ -101,11 +148,29 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // Delegation keeps the controls working for cards added after the page loads.
-  document.addEventListener('click', (event) => {
+  document.addEventListener('click', async (event) => {
+    const loginLink = event.target.closest('.nav-login');
+    if (loginLink?.dataset.logout === 'true') {
+      event.preventDefault();
+      await sessionPromise;
+      if (authToken) {
+        try {
+          await fetch('/api/auth/logout', { method: 'DELETE', headers: { Authorization: `Bearer ${authToken}` } });
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      localStorage.removeItem(authTokenKey);
+      authToken = null;
+      currentUser = null;
+      updateAuthUI();
+      return;
+    }
+
     const addButton = event.target.closest('.add-cart');
     const favoriteButton = event.target.closest('.wishlist-toggle');
     const card = event.target.closest('.product-card');
-    if (!card) return;
+    if (!card || (!addButton && !favoriteButton) || !(await requireUser())) return;
 
     if (addButton) {
       const product = productData(card); const existing = cart.find((item) => item.id === product.id);
@@ -140,5 +205,39 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.auth-tab').forEach((item) => item.classList.remove('active')); tab.classList.add('active');
     document.querySelector('#login-form').classList.toggle('hidden', tab.dataset.authTab !== 'login'); document.querySelector('#register-form').classList.toggle('hidden', tab.dataset.authTab !== 'register');
   }));
-  document.querySelectorAll('.auth-form').forEach((form) => form.addEventListener('submit', (event) => { event.preventDefault(); document.querySelector('#auth-message').textContent = 'Listo. Esta demo ya tiene tu formulario preparado.'; form.reset(); }));
+
+  const authMessage = document.querySelector('#auth-message');
+  if (authMessage) {
+    authMessage.textContent = sessionStorage.getItem('wackerbauer-auth-message') || '';
+    sessionStorage.removeItem('wackerbauer-auth-message');
+    if (new URLSearchParams(window.location.search).get('tab') === 'register') {
+      document.querySelector('[data-auth-tab="register"]')?.click();
+    }
+  }
+
+  document.querySelectorAll('.auth-form').forEach((form) => form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    authMessage.textContent = '';
+    const isRegistration = form.id === 'register-form';
+    const payload = Object.fromEntries(new FormData(form));
+    try {
+      const response = await fetch(`/api/auth/${isRegistration ? 'register' : 'login'}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'No se pudo completar la solicitud.');
+
+      authToken = data.token;
+      currentUser = data.user;
+      localStorage.setItem(authTokenKey, authToken);
+      sessionPromise = Promise.resolve();
+      const next = new URLSearchParams(window.location.search).get('next');
+      const safeNext = next?.startsWith('/') && !next.startsWith('//') && !next.includes('\\') ? next : 'index.html';
+      window.location.href = safeNext;
+    } catch (error) {
+      authMessage.textContent = error.message || 'No se pudo conectar con el servidor.';
+    }
+  }));
 });

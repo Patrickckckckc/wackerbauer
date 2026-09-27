@@ -28,6 +28,12 @@ Abre [http://localhost:3000](http://localhost:3000) en el navegador. Express sir
 - `GET /api/health`: comprueba el estado del backend.
 - `GET /api/datos`: devuelve información básica del proyecto.
 - `GET /api/products`: devuelve la lista de productos.
+- `POST /api/auth/register`: crea una cuenta con `username`, `email` y `password`.
+- `POST /api/auth/login`: inicia sesion con `email` y `password`.
+- `GET /api/auth/session`: devuelve el usuario de la sesion autenticada.
+- `DELETE /api/auth/logout`: cierra la sesion autenticada.
+
+Las rutas de sesion usan el encabezado `Authorization: Bearer <token>`. Las cuentas se guardan en `backend/users.json` con contrasenas cifradas mediante hash con sal. Las sesiones activas se mantienen en memoria y se cierran al reiniciar el servidor.
 
 ## Tecnologías
 
