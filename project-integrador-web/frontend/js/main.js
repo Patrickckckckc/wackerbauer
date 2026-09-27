@@ -63,7 +63,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('[data-wishlist-count]').forEach((element) => { element.textContent = wishlist.length; });
   };
 
-  const productData = (card) => ({ id: card.dataset.productId, name: card.dataset.productName, price: Number(card.dataset.productPrice), image: getComputedStyle(card.querySelector('.product-image')).backgroundImage });
+  const productData = (card) => {
+    const image = card.querySelector('.product-photo');
+    return { id: card.dataset.productId, name: card.dataset.productName, price: Number(card.dataset.productPrice), image: `url("${image.src}")`, alt: image.alt };
+  };
   const refreshWishlistButtons = () => products.forEach((card) => { const button = card.querySelector('.wishlist-toggle'); if (button) { const saved = wishlist.some((item) => item.id === card.dataset.productId); button.classList.toggle('saved', saved); button.textContent = saved ? '♥' : '♡'; } });
 
   const createProductCard = (product) => {
@@ -75,13 +78,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const image = document.createElement('div');
     image.className = 'product-image';
-    image.style.backgroundImage = `url("${product.image}")`;
+    const photo = document.createElement('img');
+    photo.className = 'product-photo';
+    photo.src = product.image;
+    photo.alt = product.alt;
     const favoriteButton = document.createElement('button');
     favoriteButton.className = 'icon-button wishlist-toggle';
     favoriteButton.type = 'button';
     favoriteButton.setAttribute('aria-label', `Agregar ${product.name} a favoritos`);
     favoriteButton.textContent = '♡';
-    image.append(favoriteButton);
+    image.append(photo, favoriteButton);
 
     const info = document.createElement('div');
     info.className = 'product-info';
@@ -190,6 +196,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const renderSavedItems = (items, target, empty, isCart = false) => {
     if (!target) return;
     target.innerHTML = items.map((item) => `<article class="saved-item"><div class="saved-item-thumb" style="background-image:${item.image}"></div><div><h3>${item.name}</h3><p>${isCart ? `Cantidad: ${item.quantity}` : 'Guardado en favoritos'}</p></div><div><strong>${item.price * (isCart ? item.quantity : 1)} €</strong><br><button class="remove-button" data-remove-id="${item.id}">Eliminar</button></div></article>`).join('');
+    target.querySelectorAll('.saved-item-thumb').forEach((image, index) => {
+      image.setAttribute('role', 'img');
+      image.setAttribute('aria-label', items[index].alt || items[index].name);
+    });
     target.querySelectorAll('[data-remove-id]').forEach((button) => button.addEventListener('click', () => { const index = items.findIndex((item) => item.id === button.dataset.removeId); items.splice(index, 1); writeStore(isCart ? 'wackerbauer-cart' : 'wackerbauer-wishlist', items); window.location.reload(); }));
     empty?.classList.toggle('visible', items.length === 0);
   };

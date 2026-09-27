@@ -1,8 +1,8 @@
 [
-    { "id": "blazer-01", "name": "Blazer estructura", "price": 129, "category": "mujer-prendas", "color": "Negro", "image": "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=700&q=80" },
-    { "id": "camisa-01", "name": "Camisa linea", "price": 79, "category": "mujer-prendas", "color": "Blanco roto", "image": "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=700&q=80" },
-    { "id": "loafer-01", "name": "Mocasín orbit", "price": 119, "category": "mujer-calzado", "color": "Chocolate", "image": "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?auto=format&fit=crop&w=700&q=80" },
-    { "id": "overshirt-01", "name": "Overshirt campo", "price": 99, "category": "hombre-prendas", "color": "Verde oliva", "image": "https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=700&q=80" },
-    { "id": "knit-01", "name": "Knit esencial", "price": 89, "category": "hombre-prendas", "color": "Grafito", "image": "https://images.unsplash.com/photo-1610652492500-ded49ceeb378?auto=format&fit=crop&w=700&q=80" },
-    { "id": "sneaker-01", "name": "Sneaker 02", "price": 109, "category": "hombre-calzado", "color": "Marfil", "image": "https://images.unsplash.com/photo-1495555961986-6d4c1ecb7be3?auto=format&fit=crop&w=700&q=80" }
+    { "id": "blazer-01", "name": "Blazer estructura", "price": 129, "category": "mujer-prendas", "color": "Negro", "image": "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=700&q=80", "alt": "Blazer negro de corte estructurado." },
+    { "id": "camisa-01", "name": "Camisa linea", "price": 79, "category": "mujer-prendas", "color": "Blanco roto", "image": "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=700&q=80", "alt": "Camisa de mujer en blanco roto." },
+    { "id": "loafer-01", "name": "Mocasín orbit", "price": 119, "category": "mujer-calzado", "color": "Chocolate", "image": "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?auto=format&fit=crop&w=700&q=80", "alt": "Mocasines de mujer en color chocolate." },
+    { "id": "overshirt-01", "name": "Overshirt campo", "price": 99, "category": "hombre-prendas", "color": "Verde oliva", "image": "https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=700&q=80", "alt": "Sobrecamisa de hombre en verde oliva." },
+    { "id": "knit-01", "name": "Knit esencial", "price": 89, "category": "hombre-prendas", "color": "Grafito", "image": "https://images.unsplash.com/photo-1610652492500-ded49ceeb378?auto=format&fit=crop&w=700&q=80", "alt": "Prenda de punto para hombre en color grafito." },
+    { "id": "sneaker-01", "name": "Sneaker 02", "price": 109, "category": "hombre-calzado", "color": "Marfil", "image": "https://images.unsplash.com/photo-1495555961986-6d4c1ecb7be3?auto=format&fit=crop&w=700&q=80", "alt": "Zapatillas de hombre en color marfil." }
 ]
