@@ -133,10 +133,13 @@ h3 { font-size: 1.8rem; margin-bottom: 0; font-weight: 400; }
 .checkout-dialog::backdrop { background: rgba(31, 33, 29, .65); }
 .checkout-dialog p { color: var(--orange); font: 700 1.6rem/1.2 Georgia, serif; margin: 0; }
 .checkout-dialog-close { position: absolute; top: .5rem; right: .5rem; width: 2.5rem; height: 2.5rem; border: 0; background: transparent; color: var(--ink); cursor: pointer; font: 1.5rem/1 Arial, sans-serif; }
-.auth-layout { display: grid; grid-template-columns: 1fr .8fr; gap: 8rem; padding-top: 8rem; min-height: 600px; }
+.auth-layout { display: grid; grid-template-columns: 1fr .8fr; gap: 5rem; padding-top: 6rem; padding-bottom: 5rem; min-height: 600px; }
 .auth-intro h1 { font-size: clamp(3.3rem, 6vw, 6rem); }
 .auth-intro > p:last-child { max-width: 360px; color: var(--muted); line-height: 1.6; }
 .auth-panel { background: var(--white); padding: 2rem; align-self: start; }
+.auth-panel-heading { margin-bottom: 1.75rem; }
+.auth-panel-heading h2 { font-size: 2rem; margin-bottom: .6rem; }
+.auth-panel-heading p { color: var(--muted); font: .8rem/1.55 Arial, sans-serif; margin-bottom: 0; }
 .auth-tabs { display: flex; gap: 1.5rem; border-bottom: 1px solid var(--line); margin-bottom: 2rem; }
 .auth-tab { background: none; border: 0; padding: 0 0 1rem; color: var(--muted); cursor: pointer; font: .75rem Arial, sans-serif; letter-spacing: .08em; text-transform: uppercase; }
 .auth-tab.active { border-bottom: 2px solid var(--orange); color: var(--ink); }

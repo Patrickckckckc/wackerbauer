@@ -1,11 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // Configuración compartida de la página y estado persistente
   const yearElement = document.querySelector('#year');
 
   if (yearElement) {
     yearElement.textContent = new Date().getFullYear();
   }
 
+  // Lee los datos persistidos del navegador para restaurar el estado de la sesión actual.
   const readStore = (key) => JSON.parse(localStorage.getItem(key) || '[]');
+  // Guarda la información local para que el carrito, favoritos y usuario sigan disponibles al recargar.
   const writeStore = (key, value) => localStorage.setItem(key, JSON.stringify(value));
   let products = [];
   const cart = readStore('wackerbauer-cart');
@@ -15,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentUser = null;
   let sessionPromise = Promise.resolve();
 
+  // Estado de autenticación y acciones protegidas
   const updateAuthUI = () => {
     const loginLink = document.querySelector('.nav-login');
     if (loginLink) {
@@ -45,12 +49,14 @@ document.addEventListener('DOMContentLoaded', () => {
     updateAuthUI();
   }
 
+  // Redirige al usuario a la pantalla de autenticación con la URL de la página original como retorno.
   const openAuthForCurrentPage = () => {
     const next = `${window.location.pathname}${window.location.search}${window.location.hash}`;
     sessionStorage.setItem('wackerbauer-auth-message', 'Inicia sesion o crea una cuenta para continuar.');
     window.location.href = `auth.html?next=${encodeURIComponent(next)}`;
   };
 
+  // Verifica si existe un usuario activo antes de permitir acciones privadas como comprar o guardar favoritos.
   const requireUser = async () => {
     await sessionPromise;
     if (currentUser) return true;
@@ -58,17 +64,20 @@ document.addEventListener('DOMContentLoaded', () => {
     return false;
   };
 
+  // Actualiza los contadores visibles del carrito y favoritos en cada vista de la aplicación.
   const updateCounts = () => {
     document.querySelectorAll('[data-cart-count]').forEach((element) => { element.textContent = cart.reduce((total, item) => total + item.quantity, 0); });
     document.querySelectorAll('[data-wishlist-count]').forEach((element) => { element.textContent = wishlist.length; });
   };
 
+  // Creación de tarjetas de productos y carga del catálogo
   const productData = (card) => {
     const image = card.querySelector('.product-photo');
     return { id: card.dataset.productId, name: card.dataset.productName, price: Number(card.dataset.productPrice), image: `url("${image.src}")`, alt: image.alt };
   };
   const refreshWishlistButtons = () => products.forEach((card) => { const button = card.querySelector('.wishlist-toggle'); if (button) { const saved = wishlist.some((item) => item.id === card.dataset.productId); button.classList.toggle('saved', saved); button.textContent = saved ? '♥' : '♡'; } });
 
+  // Construye cada tarjeta del catálogo con imagen, nombre, precio y botones de acción.
   const createProductCard = (product) => {
     const card = document.createElement('article');
     card.className = 'product-card';
@@ -110,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return card;
   };
 
-  // This script runs on every page, so only fetch products where catalog grids exist.
+  // Este script se ejecuta en todas las páginas, así que solo se obtienen productos donde existen cuadrículas de catálogo.
   const loadProducts = async () => {
     const categories = {
       mujer: document.querySelector('#mujer-prendas'),
@@ -153,7 +162,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // Delegation keeps the controls working for cards added after the page loads.
+  // Acciones del carrito y lista de deseos
+  // La delegación mantiene funcionando los controles para las tarjetas añadidas después de cargar la página.
   document.addEventListener('click', async (event) => {
     const loginLink = event.target.closest('.nav-login');
     if (loginLink?.dataset.logout === 'true') {
@@ -193,6 +203,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // Páginas de elementos guardados y total del carrito
+  // Renderiza la lista de productos guardados en la página de favoritos o del carrito con su acción de eliminar.
   const renderSavedItems = (items, target, empty, isCart = false) => {
     if (!target) return;
     target.innerHTML = items.map((item) => `<article class="saved-item"><div class="saved-item-thumb" style="background-image:${item.image}"></div><div><h3>${item.name}</h3><p>${isCart ? `Cantidad: ${item.quantity}` : 'Guardado en favoritos'}</p></div><div><strong>${item.price * (isCart ? item.quantity : 1)} €</strong><br><button class="remove-button" data-remove-id="${item.id}">Eliminar</button></div></article>`).join('');
@@ -215,6 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const paymentAmount = document.querySelector('#payment-amount');
   const checkoutDialog = document.querySelector('#checkout-success-dialog');
 
+  // Validación del pago y compra
   if (paymentAmount) paymentAmount.value = cartTotal.toFixed(2);
   if (checkoutButton) {
     checkoutButton.disabled = cartTotal <= 0;
@@ -225,6 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Comprueba si el número de tarjeta cumple el algoritmo de Luhn antes de aceptar el pago.
   const isValidCardNumber = (value) => {
     const digits = value.replace(/[\s-]/g, '');
     if (!/^\d{13,19}$/.test(digits)) return false;
@@ -264,9 +278,13 @@ document.addEventListener('DOMContentLoaded', () => {
     checkoutDialog.close();
     window.location.href = 'index.html';
   });
+
+  // Inicialización del catálogo y de la página compartida
   refreshWishlistButtons(); updateCounts();
   loadProducts();
 
+  // Formularios de inicio de sesión y registro
+  // Cambia entre la pestaña de inicio de sesión y registro sin recargar la página.
   document.querySelectorAll('[data-auth-tab]').forEach((tab) => tab.addEventListener('click', () => {
     document.querySelectorAll('.auth-tab').forEach((item) => item.classList.remove('active')); tab.classList.add('active');
     document.querySelector('#login-form').classList.toggle('hidden', tab.dataset.authTab !== 'login'); document.querySelector('#register-form').classList.toggle('hidden', tab.dataset.authTab !== 'register');

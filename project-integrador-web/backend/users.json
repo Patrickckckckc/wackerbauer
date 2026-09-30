@@ -1,8 +1,14 @@
 [
-    {
+  {
     "username": "Patrick",
     "email": "patrick@gmail.com",
     "passwordSalt": "11552a503b04306953a5f8a0a020aac0",
     "passwordHash": "78cead86f248b16c767479d121a6b8c89dee1c53cdd6d45878108b8a4a206031068004388fc7493e4fbc63c9eb37298e13cf14b27fcd2ff280dda089b4154d14"
-    }
+  },
+  {
+    "username": "Yamilka",
+    "email": "yanilka@gmail.com",
+    "passwordSalt": "d50d71da745d714b577e6e402eb5d1c3",
+    "passwordHash": "04a347d3e073e9f1472d9420dc5175fba3f3f3b50273bee39cd76255f9912d5ad2e61fe0ef48e7ea5c4a5d7e9490328c377561eeaf11ed378215aeebbd6a316b"
+  }
 ]
